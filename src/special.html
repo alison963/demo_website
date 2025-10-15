@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Reflected XSS Demo</title>
+</head>
+<body>
+  <h1>Reflected XSS Demo</h1>
+
+  <!-- Eingabeformular -->
+  <h2>wow!</h2>
+  <h3>Suchanfrage erfolgreich!</h3>
+  <p>Du wurdest zu einer speziellen Seite weitergeleitet, weil du "special" eingegeben hast.</p>
+  <form action="/searchSpecial" method="GET">
+    <label for="specialInput">Enter your search query:</label>
+    <input id="specialInput" type="text" name="s" placeholder="Search something" />
+    <button type="submit">Search</button>
+  </form>
+  <p id="query"></p>
+  <p id="query2"></p>
+ 
+
+</body>
+</html>

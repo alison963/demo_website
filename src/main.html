@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Reflected XSS Demo</title>
+  
+</head>
+<body>
+  <h1>Reflected XSS Demo</h1>
+<div>
+  
+
+  <!-- <form action="/search" method="GET">
+    <label for="specialInput">Enter your search query:</label>
+    <input id="specialInput" type="text" name="firstname" placeholder="Search something" />
+    <button type="submit">Search</button>
+  </form> -->
+
+
+  <button id="myButton">Click Me</button>
+ <script>
+    document.getElementById('myButton').addEventListener('click', function() {
+        window.location.href = '/ui_form.html';
+    });
+</script>
+
+
+</body>
+</html>
