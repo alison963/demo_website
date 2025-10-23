@@ -16,26 +16,32 @@ app.get("/", (req, res) => {
 // Reflected XSS: /search
 app.get("/search", (req, res) => {
   const query = req.query.firstname || "";
-  //const query2 = req.query.a || "";
-
-  // UNSICHER: Benutzereingabe wird direkt in die Antwort eingefügt
-  if (query.toLowerCase() === "special") {
-    res.sendFile(path.join(__dirname, "src", "special.html"));
+  const query2 = req.query.lastname || "";
+  // Simple dangerous-input detection
+  const dangerousPatterns = ["</script>", "<script", "alert(", "onerror=", "onload=", "javascript:"];
+  function isDangerous(s) {
+    if (!s) return false;
+    const lower = s.toLowerCase();
+    return dangerousPatterns.some(p => lower.includes(p));
   }
-  // else if (query.toLowerCase() === "hovered") {
-  //   res.sendFile(path.join(__dirname, "src", "hovered.html"));
-  // }
-  // else if (query.toLowerCase() === "clicked") {
-  //    res.sendFile(path.join(__dirname, "src", "clicked.html"));
-  // }
-  else {
-    res.send(`
+
+  if (isDangerous(query) || isDangerous(query2)) {
+    // Respond with 404 for disallowed inputs
+    res.status(404).sendFile(path.join(__dirname, "src", "404.html"));
+    return;
+  }
+
+  //UNSICHER: Benutzereingabe wird direkt in die Antwort eingefügt
+  if (query.toLowerCase() === "special" || query2.toLowerCase() === "special") {
+    res.sendFile(path.join(__dirname, "src", "special.html"));
+    return;
+  }
+
+  res.send(`
     <h2>Search Results</h2>
     <p>You also searched for: ${query}</p>
-    
+    <p>You also searched for: ${query2}</p>
   `);
-  }
-
 });
 app.get("/searchbc", (req, res) => {
 
