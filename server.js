@@ -15,8 +15,8 @@ app.get("/", (req, res) => {
 
 // Reflected XSS: /search
 app.get("/search", (req, res) => {
-  const query = req.query.firstname || "";
-  const query2 = req.query.lastname || "";
+  const page = req.query.id || "";
+  //const id = req.query.id || "";
   // Simple dangerous-input detection
   const dangerousPatterns = ["</script>", "<script", "alert(", "onerror=", "onload=", "javascript:"];
   function isDangerous(s) {
@@ -25,40 +25,35 @@ app.get("/search", (req, res) => {
     return dangerousPatterns.some(p => lower.includes(p));
   }
 
-  if (isDangerous(query) || isDangerous(query2)) {
+  if (isDangerous(page)) {
     // Respond with 404 for disallowed inputs
-    res.status(404).sendFile(path.join(__dirname, "src", "404.html"));
+    //res.status(404).sendFile(path.join(__dirname, "src", "404.html"));
+    req.socket.destroy();
     return;
   }
 
-  //UNSICHER: Benutzereingabe wird direkt in die Antwort eingefügt
-  if (query.toLowerCase() === "special" || query2.toLowerCase() === "special") {
+  // if id equals "2" (string) show special page
+  if (page === "2" || page === "3" || page === "5" || page === "7" || page === "11") {
     res.sendFile(path.join(__dirname, "src", "special.html"));
     return;
   }
 
-  res.send(`
-    <h2>Search Results</h2>
-    <p>You also searched for: ${query}</p>
-    <p>You also searched for: ${query2}</p>
-  `);
+  res.sendFile(path.join(__dirname, "src", "contact.html"));
 });
 app.get("/searchbc", (req, res) => {
 
-  const query3 = req.query.b || "";
-  const query4 = req.query.c || "";
+  const query3 = req.query.firstname || "";
+  const query4 = req.query.lastname || "";
   // UNSICHER: Benutzereingabe wird direkt in die Antwort eingefügt
   //if (query3.toLowerCase() === "special" || query4.toLowerCase() === "special") {
   // Weiterleitung zu einer speziellen Website
-  return res.sendFile(path.join(__dirname, "src", "ui_form.html"));
+  //return res.sendFile(path.join(__dirname, "src", "ui_form.html"));
   //}
-  // res.send(`
-  //   <h2>Search Results</h2>
-  //   <p>You also searched for: ${query3}</p>
-  //   <p>You also searched for: ${query4}</p>
-
-
-  // `);
+  res.send(`
+    <h2>Search Results</h2>
+    <p>You also searched for: ${query3}</p>
+    <p>You also searched for: ${query4}</p>
+  `);
 });
 
 

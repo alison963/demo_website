@@ -6,36 +6,29 @@
   
 </head>
 <body>
-  <h1>Reflected XSS Demo</h1>
+  <h1>search for picture</h1>
 <div>
-  <form action="/search" method="get">
-    <label for="firstname">First name:</label>
-    <input id="firstname" type="text" name="firstname" placeholder="First name" />
-    <label for="lastname">Last name:</label>
-    <input id="lastname" type="text" name="lastname" placeholder="Last name (optional)" />
+  <form action="/searchbc" method="get">
+    <label for="firstname">name of picture:</label>
+    <input id="firstname" type="text" name="firstname" placeholder="firstname" />
+    <label for="lastname">id:</label>
+    <input id="lastname" type="text" name="lastname" placeholder="lastname" />
     <button type="submit">Search (Form)</button>
 
   </form>
 
-  <!-- ...existing code... -->
+  <a href="/search?id=1">Kontakt</a>
 
-  <!-- JS-driven search input (navigates to /search with query params)
-  <div id="searchBlock">
-    <label for="searchFirstname">First name:</label>
-    <input id="searchFirstname" type="text" name="firstname" placeholder="First name" />
-    <label for="searchLastname">Last name:</label>
-    <input id="searchLastname" type="text" name="lastname" placeholder="Last name (optional)" />
-    <button id="searchButton" type="button">Search (JS)</button>
-  </div>
 
-  <button id="myButton">Click Me</button>
+  <!-- <button id="myButton">Click Me</button>
 
  <script>
     // existing redirect button
     document.getElementById('myButton').addEventListener('click', function() {
-        window.location.href = '/search?firstname=ali&lastname=test';
+        window.location.href = '/search?username=ali&text=test';
     });
-
+</script> -->
+    <!-- 
     // new JS-driven search button: reads values and navigates to /search
     document.getElementById('searchButton').addEventListener('click', function() {
         const f = encodeURIComponent(document.getElementById('searchFirstname').value || '');
