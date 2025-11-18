@@ -8,7 +8,7 @@
 <body>
   <h1>search for picture</h1>
 <div>
-  <!-- <form action="/searchbc" method="get">
+  <form action="/searchbc" method="get">
     <label for="firstname">name of picture:</label>
     <input id="firstname" type="text" name="firstname" placeholder="firstname" />
     <label for="lastname">id:</label>
@@ -16,32 +16,28 @@
     <button type="submit">Search (Form)</button>
 
   </form>
- -->
+
   <a href="/search?id=1">Kontakt</a>
 
-  <label for="firstname">name of picture:</label>
-  <input id="firstname" type="text" name="firstname" placeholder="firstname" oninput="updatePreview()" />
-  <label for="lastname">id:</label>
-  <input id="lastname" type="text" name="lastname" placeholder="lastname" oninput="updatePreview()" />
-  <button id="jsSearch" type="button" onclick="doSearch()">Search (JS onclick)</button>
-  <p id="preview" aria-live="polite" style="margin-top:8px;color:#333;">Vorschau:</p>
- 
-  <script>
-    function doSearch() {
-      const f = encodeURIComponent(document.getElementById('firstname').value || '');
-      const l = encodeURIComponent(document.getElementById('lastname').value || '');
-      const qs = `?firstname=${f}&lastname=${l}`;
-      // Navigiert zur gleichen Route wie das Formular (/searchbc) with den eingegebenen Werten
-      window.location.href = '/searchbc' + qs;
-    }
 
-    function updatePreview() {
-      const f = document.getElementById('firstname').value || '';
-      const l = document.getElementById('lastname').value || '';
-      // textContent verhindert HTML-Injection in der Vorschau
-      document.getElementById('preview').textContent = `Vorschau: ${f} ${l}`;
-    }
-  </script>
+  <!-- <button id="myButton">Click Me</button>
+
+ <script>
+    // existing redirect button
+    document.getElementById('myButton').addEventListener('click', function() {
+        window.location.href = '/search?username=ali&text=test';
+    });
+</script> -->
+    <!-- 
+    // new JS-driven search button: reads values and navigates to /search
+    document.getElementById('searchButton').addEventListener('click', function() {
+        const f = encodeURIComponent(document.getElementById('searchFirstname').value || '');
+        const l = encodeURIComponent(document.getElementById('searchLastname').value || '');
+        // Build query string (include lastname only if provided to keep URLs clean)
+        const qs = `?firstname=${f}${l ? `&lastname=${l}` : ''}`;
+        window.location.href = '/search' + qs;
+    });
+</script> -->
 
 
 
